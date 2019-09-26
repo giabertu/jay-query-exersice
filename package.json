@@ -1,6 +1,6 @@
 {
   "name": "codeworks-jay-query-exercise",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "A Codeworks exercise to train students",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "codeworksbcn/jay-query-exercise"
+    "url": "codeworks/jay-query-exercise"
   },
   "author": "Codeworks",
   "license": "UNLICENSED",
