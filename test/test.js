@@ -8,7 +8,6 @@ require('jsdom-global')(fs.readFileSync(__dirname + '/mock.html', 'utf8'));
 const $ = require('jquery');
 
 describe('JayQuery', () => {
-
   let num;
 
   beforeEach(() => {
@@ -23,31 +22,24 @@ describe('JayQuery', () => {
   afterEach(() => $('.test').remove());
 
   describe('ready', () => {
-
-    it(
-      'should trigger the indicated handler when the HTML document is ready', done => {
-        let domReady;
-        J$.ready(() => (domReady && done()));
-        domReady = true;
-        document.dispatchEvent(new Event('DOMContentLoaded'));
-        document.dispatchEvent(new Event('load'));
-      }
-    );
-
+    it('should trigger the indicated handler when the HTML document is ready', done => {
+      let domReady;
+      J$.ready(() => domReady && done());
+      domReady = true;
+      document.dispatchEvent(new Event('DOMContentLoaded'));
+      document.dispatchEvent(new Event('load'));
+    });
   });
 
   describe('selector', () => {
-
     it('should select all the HTML elements that match selector', () => {
       const num = $('.test').length;
       J$('.test').length.should.equal(num);
       J$('no').length.should.equal(0);
     });
-
   });
 
   describe('addClass', () => {
-
     it('should add the indicated class', () => {
       $('.test').hasClass('foo').should.be.false;
       J$('.test').addClass('foo');
@@ -66,10 +58,14 @@ describe('JayQuery', () => {
       $('.foo').length.should.equal(num);
     });
 
+    it('should be chainable', () => {
+      const nodeList = J$('.test');
+      J$('.test').addClass('foo').length.should.equal(num);
+      J$('.test').addClass('foo').should.deep.equal(nodeList);
+    });
   });
 
   describe('removeClass', () => {
-
     it('should remove the indicated class', () => {
       $('.test').addClass('foo');
       J$('.test').removeClass('foo');
@@ -84,10 +80,16 @@ describe('JayQuery', () => {
       $('.foo1').length.should.equal(num);
     });
 
+    it('should be chainable', () => {
+      const nodeList = J$('.test');
+      J$('.test').addClass('foo');
+      J$('.test').addClass('bar');
+      J$('.foo').removeClass('foo').length.should.equal(num);
+      J$('.bar').removeClass('bar').should.deep.equal(nodeList);
+    });
   });
 
   describe('toggleClass', () => {
-
     it('should toggle the indicated class', () => {
       $($('.test')[0]).addClass('foo');
       J$('.test').toggleClass('foo');
@@ -101,21 +103,23 @@ describe('JayQuery', () => {
       $('.foo1').length.should.equal(num);
     });
 
+    it('should be chainable', () => {
+      const nodeList = J$('.test');
+      J$('.test').toggleClass('foo').length.should.equal(num);
+      J$('.test').toggleClass('foo').should.deep.equal(nodeList);
+    });
   });
 
   describe('hide', () => {
-
     it('should hide the elements', () => {
       J$('.test').hide();
       $('.test').each(function () {
         $(this).css('display').should.equal('none');
       });
     });
-
   });
 
   describe('show', () => {
-
     it('should default to "inline" if the elements are not visible', () => {
       $('.test').hide();
       J$('.test').show();
@@ -130,11 +134,9 @@ describe('JayQuery', () => {
       $($('.test')[0]).css('display').should.equal('flex');
       $($('.test')[1]).css('display').should.equal('block');
     });
-
   });
 
   describe('hide and show', () => {
-
     it('should keep the original display property if "show" is applied after "hide"', () => {
       $($('.test')[0]).css('display', 'flex');
       J$('.test').hide();
@@ -142,11 +144,9 @@ describe('JayQuery', () => {
       $($('.test')[0]).css('display').should.equal('flex');
       $($('.test')[1]).css('display').should.equal('block');
     });
-
   });
 
   describe('toggle', () => {
-
     it('should toggle the elements visibility', () => {
       $($('.test')[0]).css('display', 'flex');
       J$('.test').toggle();
@@ -157,11 +157,9 @@ describe('JayQuery', () => {
       $($('.test')[0]).css('display').should.equal('flex');
       $($('.test')[1]).css('display').should.equal('block');
     });
-
   });
 
   describe('click', () => {
-
     it('should trigger the indicated handler when the elements are clicked', () => {
       let called = 0;
       function test () {
@@ -172,11 +170,9 @@ describe('JayQuery', () => {
       $('.test').click();
       called.should.equal(num);
     });
-
   });
 
   describe('append', () => {
-
     it('should append the indicated content to the elements', () => {
       const node1 = '<h1>Hello</h1>';
       const node2 = '<h2>Bye</h2>';
@@ -186,7 +182,9 @@ describe('JayQuery', () => {
       });
       J$('.test').append(node2);
       $('.test').each(function () {
-        $(this).html().should.equal(node1 + node2);
+        $(this)
+          .html()
+          .should.equal(node1 + node2);
       });
     });
 
@@ -196,10 +194,15 @@ describe('JayQuery', () => {
       $('h1').length.should.equal(num);
     });
 
+    it('should be chainable', () => {
+      const node1 = '<h1>Hello</h1>';
+      const nodeList = J$('.test');
+      J$('.test').append(node1).length.should.equal(num);
+      J$('.test').append(node1).should.deep.equal(nodeList);
+    });
   });
 
   describe('text', () => {
-
     it('should insert the indicated content as text', () => {
       const text1 = 'Hello';
       J$('.test').text(text1);
@@ -224,6 +227,11 @@ describe('JayQuery', () => {
       $('h1').length.should.equal(0);
     });
 
+    it('should be chainable', () => {
+      const text1 = 'Hello';
+      const nodeList = J$('.test');
+      J$('.test').text(text1).length.should.equal(num);
+      J$('.test').text(text1).should.deep.equal(nodeList);
+    });
   });
-
 });
