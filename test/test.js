@@ -60,8 +60,8 @@ describe('JayQuery', () => {
 
     it('should be chainable', () => {
       const nodeList = J$('.test');
-      J$('.test').addClass('foo').length.should.equal(num);
-      J$('.test').addClass('foo').should.deep.equal(nodeList);
+      nodeList.addClass('foo').length.should.equal(num);
+      nodeList.addClass('foo').should.equal(nodeList);
     });
   });
 
@@ -82,10 +82,10 @@ describe('JayQuery', () => {
 
     it('should be chainable', () => {
       const nodeList = J$('.test');
-      J$('.test').addClass('foo');
-      J$('.test').addClass('bar');
-      J$('.foo').removeClass('foo').length.should.equal(num);
-      J$('.bar').removeClass('bar').should.deep.equal(nodeList);
+      nodeList.addClass('foo');
+      nodeList.addClass('bar');
+      nodeList.removeClass('foo').length.should.equal(num);
+      nodeList.removeClass('bar').should.equal(nodeList);
     });
   });
 
@@ -105,8 +105,8 @@ describe('JayQuery', () => {
 
     it('should be chainable', () => {
       const nodeList = J$('.test');
-      J$('.test').toggleClass('foo').length.should.equal(num);
-      J$('.test').toggleClass('foo').should.deep.equal(nodeList);
+      nodeList.toggleClass('foo').length.should.equal(num);
+      nodeList.toggleClass('foo').should.equal(nodeList);
     });
   });
 
@@ -197,8 +197,8 @@ describe('JayQuery', () => {
     it('should be chainable', () => {
       const node1 = '<h1>Hello</h1>';
       const nodeList = J$('.test');
-      J$('.test').append(node1).length.should.equal(num);
-      J$('.test').append(node1).should.deep.equal(nodeList);
+      nodeList.append(node1).length.should.equal(num);
+      nodeList.append(node1).should.equal(nodeList);
     });
   });
 
@@ -230,8 +230,8 @@ describe('JayQuery', () => {
     it('should be chainable', () => {
       const text1 = 'Hello';
       const nodeList = J$('.test');
-      J$('.test').text(text1).length.should.equal(num);
-      J$('.test').text(text1).should.deep.equal(nodeList);
+      nodeList.text(text1).length.should.equal(num);
+      nodeList.text(text1).should.equal(nodeList);
     });
   });
 });

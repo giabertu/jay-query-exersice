@@ -1,6 +1,6 @@
 {
   "name": "codeworks-jay-query-exercise",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A Codeworks exercise to train students",
   "main": "index.js",
   "scripts": {
