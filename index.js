@@ -39,7 +39,7 @@ methods.hide = function () {
       array.push(el.style.display);
     } */
     if (el.style.display){
-      el.style.oldDisplay = el.style.display;
+      el.oldDisplay = el.display;
     }
     el.style.display = 'none';
   })
@@ -51,20 +51,34 @@ methods.show = function () {
 /*   this.forEach(el => {
     if (el.style.oldDisplay && el.style.display == 'none') el.style.display = el.style.oldDisplay
   }) */
-  this.forEach(el => {el.style.display =  el.style.display === 'none' ? 'inline' : el.style.display})
+  //loop through the elements
+  //for each element check if old prop exists
+  //
+
+
+
+
+  this.forEach(el => {
+    if (el.oldDisplay && el.style.display == 'none'){
+      el.style.display = el.oldDisplay;
+    } else {
+      el.style.display = 'inline';
+    }
+    //el.style.display =  el.style.display === 'none' ? 'inline' : el.style.display
+  })
 }
 
 
 methods.toggle = function () {
-  
-  this.forEach(el => {
-    let arrayEl = [el];
+  var array = [];
+  this.forEach((el, index) => {
     if (el.style.display !== 'none') {
-      methods.hide.call(arrayEl);
+      
+      el.style.display = 'none';
     } else {
-      methods.show.call(arrayEl);
+      el.style.display = '';
     }
-  })
+  }) 
   return this; 
 }
 
